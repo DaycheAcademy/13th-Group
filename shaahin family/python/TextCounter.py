@@ -33,4 +33,4 @@ for val in tobeList:
 print(f'All char: {varInput.__len__()}\nAll word: {len(listChar)}\nAll unique words:{len(setChar)}\nAll tobe: {len(interSet)}\n')
 print("tobe:")
 for k, v in dictCountTobe.items():
-    print('{}: {}'.format(k,v))
+    print('{}: {}'.format(k, v))
