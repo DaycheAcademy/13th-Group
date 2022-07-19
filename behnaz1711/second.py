@@ -16,7 +16,10 @@ tobe = ['am', 'is', 'are']
 tobe_count = [words.count(x) for x in tobe]
 total_tobe_count = sum(tobe_count)
 
-for i in range(0, len(tobe)):
-    print(tobe[i], '=', tobe_count[i])
+# for i in range(0, len(tobe)):
+#     print(tobe[i], '=', tobe_count[i])
+
+for ind, w in enumerate(tobe):
+    print(f'{w} = {tobe_count[ind]}')
 
 print('total tobe=', total_tobe_count)
