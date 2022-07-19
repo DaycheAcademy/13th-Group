@@ -1,6 +1,6 @@
 import random
 
-def changInput(*user):
+def changeInput(*user):
     for i in user:
         if i in ('rock', 'r'):
             return 'rock'
@@ -10,7 +10,7 @@ def changInput(*user):
             return 'paper'
 
     return ''
-
+# new for
 
 def check_win(pc, user):
     t_Wins = (('rock', 'scissors'), ('scissors', 'paper'), ('paper', 'rock'))
