@@ -8,8 +8,8 @@ def changInput(*user):
             return 'scissors'
         elif i in ('paper', 'p'):
             return 'paper'
-        else:
-            return ''
+
+    return ''
 
 
 def check_win(pc, user):
@@ -51,6 +51,7 @@ while True:
                 userInput = userInput.lower().strip().split(' ')
                 userInput = changInput(*userInput)
                 if userInput == '':
+                    print("Please select from limited")
                     continue
 
                 print('\33[36m' + '\nuserInput:{}'.format(userInput), '\nRandomPc:{}'.format(RandomPc))
