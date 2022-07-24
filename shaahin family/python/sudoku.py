@@ -1,21 +1,6 @@
 import turtle
 from random import randint
 
-turtle.hideturtle()
-turtle.speed(0)
-turtle.title("sudoku")
-turtle.bgcolor("orange")
-
-top_x = -150
-top_y = 150
-
-grid = [[0 for j in range(i, i + 9, 1)]for i in range(1, 81, 9)]
-grid_copy = [[0 for t in range(i, i + 9, 1)]for i in range(1, 81, 9)]
-final_list = [[0 for b in range(i, i + 9, 1)]for i in range(1, 81, 9)]
-check_while = 0
-count_valid_value = 0
-count_not_valid_value = 0
-
 
 def fill_grid_list(grid_list):
     start = randint(1, 9)
@@ -79,38 +64,53 @@ def fill_grid(fill_list):
     # gridCopy = copy.deepcopy(grid)
 
 
-draw_grid()
-fill_grid_list(grid)
+if __name__ == '__main__':
+    print(turtle.screensize())
+    turtle.hideturtle()
+    turtle.speed(0)
+    turtle.title("sudoku")
+    turtle.bgcolor("pink")
 
+    top_x = -150
+    top_y = 150
 
-while check_while == 0:
-    check_while = 1
+    grid = [[0 for j in range(i, i + 9, 1)]for i in range(1, 81, 9)]
+    grid_copy = [[0 for t in range(i, i + 9, 1)]for i in range(1, 81, 9)]
+    final_list = [[0 for b in range(i, i + 9, 1)]for i in range(1, 81, 9)]
+    check_while = 0
+    count_valid_value = 0
+    count_not_valid_value = 0
+
+    draw_grid()
+    fill_grid_list(grid)
+
+    while check_while == 0:
+        check_while = 1
+        for i in range(0, 9):
+            for t in range(0, 9):
+                if grid_copy[i][t] == 0:
+                    val = turtle.textinput('', 'input value for ({},{})'.format(i, t))
+                    if val.isdigit() and int(val) in (1, 2, 3, 4, 5, 6, 7, 8, 9):
+                        f_value = int(val)
+                        write_text(f_value, top_x + t * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'purple')
+                        grid_copy[i][t] = f_value
+
+        for i in grid_copy:
+            if 0 in i:
+                check_while = 0
+
     for i in range(0, 9):
-        for t in range(0, 9):
-            if grid_copy[i][t] == 0:
-                val = turtle.textinput('', 'input value for ({},{})'.format(i, t))
-                if val.isdigit() and int(val) in (1, 2, 3, 4, 5, 6, 7, 8, 9):
-                    f_value = int(val)
-                    write_text(f_value, top_x + t * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'purple')
-                    grid_copy[i][t] = f_value
+        for j in range(0, 9):
+            if final_list[i][j] == 1 and grid_copy[i][j] == grid[i][j]:
+                final_list[i][j] = grid_copy[i][j]
+                write_text(grid_copy[i][j], top_x + j * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'green')
+                count_valid_value += 1
+            elif final_list[i][j] == 1:
+                final_list[i][j] = 0
+                count_not_valid_value += 1
+                write_text(grid_copy[i][j] if grid_copy[i][j] > 0 else '', top_x + j * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'red')
 
-    for i in grid_copy:
-        if 0 in i:
-            check_while = 0
+    write_text(f'Number of wrong numbers: {count_not_valid_value}', -125, -200, 15, 'red')
+    write_text(f'Number of correct numbers: {count_valid_value}', -125, -250, 15, 'green')
 
-
-for i in range(0, 9):
-    for j in range(0, 9):
-        if final_list[i][j] == 1 and grid_copy[i][j] == grid[i][j]:
-            final_list[i][j] = grid_copy[i][j]
-            write_text(grid_copy[i][j], top_x + j * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'green')
-            count_valid_value += 1
-        elif final_list[i][j] == 1:
-            final_list[i][j] = 0
-            count_not_valid_value += 1
-            write_text(grid_copy[i][j] if grid_copy[i][j] > 0 else '', top_x + j * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'red')
-
-write_text(f'Number of wrong numbers: {count_not_valid_value}', -100, -200, 15, 'red')
-write_text(f'Number of correct numbers: {count_valid_value}', -100, -250, 15, 'green')
-
-turtle.done()
+    turtle.done()
