@@ -12,7 +12,9 @@ top_y = 150
 grid = [[0 for j in range(i, i + 9, 1)]for i in range(1, 81, 9)]
 grid_copy = [[0 for t in range(i, i + 9, 1)]for i in range(1, 81, 9)]
 final_list = [[0 for b in range(i, i + 9, 1)]for i in range(1, 81, 9)]
-count_error = 0
+check_while = 0
+count_valid_value = 0
+count_not_valid_value = 0
 
 
 def fill_grid_list(grid_list):
@@ -73,12 +75,13 @@ def fill_grid(fill_list):
                 grid_copy[r][c] = fill_list[r][c]
                 continue
             grid_copy[r][c] = 0
+            final_list[r][c] = 1
     # gridCopy = copy.deepcopy(grid)
 
 
 draw_grid()
 fill_grid_list(grid)
-check_while = 0
+
 
 while check_while == 0:
     check_while = 1
@@ -98,14 +101,16 @@ while check_while == 0:
 
 for i in range(0, 9):
     for j in range(0, 9):
-        if grid_copy[i][j] == grid[i][j]:
+        if final_list[i][j] == 1 and grid_copy[i][j] == grid[i][j]:
             final_list[i][j] = grid_copy[i][j]
             write_text(grid_copy[i][j], top_x + j * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'green')
-        else:
+            count_valid_value += 1
+        elif final_list[i][j] == 1:
             final_list[i][j] = 0
-            count_error += 1
+            count_not_valid_value += 1
             write_text(grid_copy[i][j] if grid_copy[i][j] > 0 else '', top_x + j * 35 + 9, top_y - i * 35 - 35 + 8, 15, 'red')
 
-write_text(f'count error: {count_error}', -50, -200, 15, 'red')
+write_text(f'Number of wrong numbers: {count_not_valid_value}', -100, -200, 15, 'red')
+write_text(f'Number of correct numbers: {count_valid_value}', -100, -250, 15, 'green')
 
 turtle.done()
